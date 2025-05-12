@@ -1,9 +1,10 @@
 # utils.py (you can create this new file or add to an existing helper module)
 import os
+import json
 import requests
 from datetime import datetime
 from sqlalchemy.orm import Session
-from models import StockDaily
+from models import StockDaily, Dividend
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -61,3 +62,5 @@ def fetch_and_save_stock_data(ticker_symbol: str, db: Session, from_date: str = 
 
     db.commit()
     print(f"{added} new records inserted for {ticker_symbol}")
+
+

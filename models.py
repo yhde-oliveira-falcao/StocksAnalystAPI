@@ -2,6 +2,9 @@ from sqlalchemy import Boolean, Column, Integer, String, Date, Float, ForeignKey
 from sqlalchemy.orm import relationship
 from database import Base
 
+from sqlalchemy import Column, Integer, String, Float, Date, UniqueConstraint
+from database import Base
+
 
 class StockDaily(Base):
     __tablename__ = 'stocks_daily'
@@ -19,15 +22,30 @@ class StockDaily(Base):
     dividends = relationship("Dividend", back_populates="stock", cascade="all, delete-orphan")
 
 
+#class Dividend(Base):
+#    __tablename__ = 'dividends'
+#
+#   id = Column(Integer, primary_key=True, autoincrement=True)
+#    ex_date = Column(String(20))
+#    amount = Column(Float, nullable=False)
+#    declaration = Column(String(100))
+#   record_date = Column(String(20))
+#    pay_date = Column(String(20))
+#
+#    stock_id = Column(Integer, ForeignKey('stocks_daily.id'), nullable=False)
+#    stock = relationship("StockDaily", back_populates="dividends")
+
 class Dividend(Base):
-    __tablename__ = 'dividends'
+    __tablename__ = "dividends"
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    ex_date = Column(String(20))
-    amount = Column(Float, nullable=False)
-    declaration = Column(String(100))
-    record_date = Column(String(20))
-    pay_date = Column(String(20))
+    id = Column(Integer, primary_key=True, index=True)
+    ticker = Column(String, index=True)
+    ex_date = Column(Date)
+    amount = Column(Float)
+    declaration_date = Column(Date, nullable=True)
+    record_date = Column(Date, nullable=True)
+    payable_date = Column(Date, nullable=True)
 
-    stock_id = Column(Integer, ForeignKey('stocks_daily.id'), nullable=False)
-    stock = relationship("StockDaily", back_populates="dividends")
+    __table_args__ = (
+        UniqueConstraint("ticker", "ex_date", name="unique_ticker_ex_date"),
+    )
