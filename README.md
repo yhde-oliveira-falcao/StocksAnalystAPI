@@ -81,6 +81,10 @@ uvicorn main:app --host 127.0.0.1 --port 8080
 
 - Visiting http://127.0.0.1:8000/docs will open the testing environment for FastAPI backend (no Postman here)
 
+- You can also visit the http://127.0.0.1:8080/stocks/html_summary to see the stocks stored in the database along with their records' first and last, it looks like this:
+![image](https://github.com/user-attachments/assets/a01f62a3-ca37-4197-8d34-7f7aeb77b738)
+
+
 
 ## Future Enhancements
 
